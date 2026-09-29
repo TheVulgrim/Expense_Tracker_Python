@@ -26,28 +26,32 @@ print("-------------Expense-Tracker---------------")
 
 with open(file_path, 'a', newline="") as file:
     writer = csv.writer(file)
-    
-    while True:
-        category = input("Which category it belong to, Food / Travel / Personal / Savings (exit to see total):").lower().strip()
-        
-        if category == "exit":
-            break
-            
-        if category not in expense_list:
-            print("invalid category")
-            continue
-            
-        try:
-            Expense = int(input("Enter the expense :"))
-        except ValueError:
-            print("invalid input! Please enter a number.")
-            continue
-        
-        if Expense > 0:
-            expense_list[category] += Expense
-            writer.writerow([category, Expense])
-        else:
-            print("invalid expense amount")
+
+    try:
+        while True:
+            category = input("Which category it belong to, Food / Travel / Personal / Savings (exit to see total):").lower().strip()
+
+            if category == "exit":
+                break
+
+            if category not in expense_list:
+                print("invalid category")
+                continue
+
+            try:
+                Expense = int(input("Enter the expense :"))
+            except ValueError:
+                print("invalid input! Please enter a number.")
+                continue
+
+            if Expense > 0:
+                expense_list[category] += Expense
+                writer.writerow([category, Expense])
+            else:
+                print("invalid expense amount")
+
+    except (KeyboardInterrupt, EOFError):
+        print("\nExiting...")
 
     print(expense_list)
 
